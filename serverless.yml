@@ -1,0 +1,84 @@
+# Welcome to serverless. Read the docs
+# https://serverless.com/framework/docs/
+
+service: serverless-zombocom
+
+plugins:
+  - serverless-sync-s3buckets
+
+custom:
+  syncS3Buckets:
+    - bucketRef: StaticSite
+      localDir: static
+  hostedZoneName: serverless-zombo.com
+  hostedZoneId: Z3AQBSTGFYJSTF    # us-east-1
+  aliasDNSName: s3-website-us-east-1.amazonaws.com
+
+provider:
+  name: aws
+  runtime: nodejs6.10
+  stage: prod
+  stackTags:
+    serverless:servess: ${self:service}
+
+resources:
+  Resources:
+    ## Specifying the S3 Bucket
+    StaticSite:
+      Type: AWS::S3::Bucket
+      Properties:
+        AccessControl: PublicRead
+        BucketName: ${self:custom.hostedZoneName}
+        WebsiteConfiguration:
+          IndexDocument: index.xhtml
+          ErrorDocument: index.xhtml
+
+    StaticSiteS3BucketPolicy:
+      Type: AWS::S3::BucketPolicy
+      Properties:
+        Bucket:
+          Ref: StaticSite
+        PolicyDocument:
+          Statement:
+            - Sid: PublicReadGetObject
+              Effect: Allow
+              Principal: "*"
+              Action:
+              - s3:GetObject
+              Resource:
+                Fn::Join: [
+                  "", [
+                    "arn:aws:s3:::",
+                    {
+                      "Ref": "StaticSite"
+                    },
+                    "/*"
+                  ]
+                ]
+
+    DnsRecord:
+      Type: "AWS::Route53::RecordSet"
+      Properties:
+        AliasTarget:
+          DNSName: ${self:custom.aliasDNSName}
+          HostedZoneId: ${self:custom.hostedZoneId}
+        HostedZoneName: ${self:custom.hostedZoneName}.
+        Name:
+          Ref: StaticSite
+        Type: 'A'
+
+  Outputs:
+    StaticSiteS3BucketName:
+      Value:
+        'Ref': StaticSite
+    StaticSiteS3BucketDomainName:
+      Value:
+        Fn::GetAtt:
+          - StaticSite
+          - DomainName
+    StaticSiteS3BucketWebsiteURL:
+      Value:
+        Fn::GetAtt:
+          - StaticSite
+          - WebsiteURL
+

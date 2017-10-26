@@ -1,0 +1,10 @@
+{
+  "name": "serverless-zombocom",
+  "description": "This... is... serverless. Welcome. This is serverless; welcome ... to serverless. You can do anything with serverless. Anything at all. The only limit is yourself. Welcome... to serverless",
+  "version": "0.1.0",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "serverless-sync-s3buckets": "^1.0.1"
+  }
+}
