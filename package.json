@@ -5,6 +5,6 @@
   "license": "MIT",
   "dependencies": {},
   "devDependencies": {
-    "serverless-sync-s3buckets": "^1.0.1"
+    "serverless-s3-sync": "^1.3.0"
   }
 }

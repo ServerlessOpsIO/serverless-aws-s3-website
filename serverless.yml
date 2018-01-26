@@ -4,7 +4,7 @@
 service: serverless-zombocom
 
 plugins:
-  - serverless-sync-s3buckets
+  - serverless-s3-sync
 
 custom:
   syncS3Buckets:
@@ -13,6 +13,9 @@ custom:
   hostedZoneName: serverless-zombo.com
   hostedZoneId: Z3AQBSTGFYJSTF    # us-east-1
   aliasDNSName: s3-website-us-east-1.amazonaws.com
+  s3Sync:
+    - bucketName: ${self:custom.siteName}
+      localDir: static
 
 provider:
   name: aws
