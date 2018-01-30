@@ -7,11 +7,8 @@ plugins:
   - serverless-s3-sync
 
 custom:
-  syncS3Buckets:
-    - bucketRef: StaticSite
-      localDir: static
-  hostedZoneName: serverless-zombo.com
-  hostedZoneId: Z3AQBSTGFYJSTF    # us-east-1
+  siteName: serverless-zombo.com
+  aliasHostedZoneId: Z3AQBSTGFYJSTF    # us-east-1
   aliasDNSName: s3-website-us-east-1.amazonaws.com
   s3Sync:
     - bucketName: ${self:custom.siteName}
@@ -64,8 +61,8 @@ resources:
       Properties:
         AliasTarget:
           DNSName: ${self:custom.aliasDNSName}
-          HostedZoneId: ${self:custom.hostedZoneId}
-        HostedZoneName: ${self:custom.hostedZoneName}.
+          HostedZoneId: ${self:custom.aliasHostedZoneId}
+        HostedZoneName: ${self:custom.siteName}.
         Name:
           Ref: StaticSite
         Type: 'A'
