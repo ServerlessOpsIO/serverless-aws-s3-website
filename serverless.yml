@@ -31,7 +31,7 @@ resources:
       Type: AWS::S3::Bucket
       Properties:
         AccessControl: PublicRead
-        BucketName: ${self:custom.hostedZoneName}
+        BucketName: ${self:custom.siteName}
         WebsiteConfiguration:
           IndexDocument: index.xhtml
           ErrorDocument: index.xhtml
