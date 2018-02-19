@@ -1,8 +1,10 @@
-# serverless-zombo.com
+# serverless-aws-s3-website
 
-Deploy ZomboCom as an AWS serverless website.
+Deploy and manage a static website hosted on AWS S3.
 
-Made to demonstrate using Serverless Framework to demonstrate deploying a state site hosted on AWS.
+To learn more how this was made, see here:
+
+* https://www.serverlessops.io/blog/static-websites-on-aws-s3-with-serverless-framework
 
 ## Credit
 * [zombo.com](http://zombo.com): The original.
